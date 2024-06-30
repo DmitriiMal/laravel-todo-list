@@ -16,11 +16,25 @@
 <body>
     <div class="container pt-5">
         <h1>Todo List</h1>
-        <div class="mb-3">
+        @foreach ($listItems as $listItem)
+        <ul>
+            <!-- @if (!$listItem->is_complete) -->
+            <li class="d-inline me-4">{{$listItem->name}}</li>
+            <form method="post" action="{{ route('markComplete', $listItem->id) }}" class="mb-3 d-inline" accept-charset="UTF-8">
+                {{csrf_field()}}
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">Done</button>
+            </form>
+
+            <!-- @endif -->
+        </ul>
+        @endforeach
+
+        <form method="post" action="{{ route('saveItem') }}" class="mb-3" accept-charset="UTF-8">
+            {{csrf_field()}}
             <label for="listItem" class="form-label">New List Item</label>
-            <input type="text" class="form-control" id="listItem" placeholder="Type a new list Item">
-            <button class="btn btn-outline-dark mt-3 px-4 rounded-pill">Save</button>
-        </div>
+            <input type="text" class="form-control" id="listItem" name="listItem" placeholder="Type a new list Item">
+            <button type="submit" class="btn btn-outline-dark mt-3 px-4 rounded-pill">Save</button>
+        </form>
     </div>
 </body>
 
